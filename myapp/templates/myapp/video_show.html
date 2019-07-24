@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<title>Show Video</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Show video</h1>
+    {% for i in data %}
+    <video name="video" src="{{ i.mp4file.url }}" width="640" height="480" controls="true">
+    </video>
+    {% endfor %}
+</body>
+<script type="text/javascript">
+jQuery("video").each(function() {
+    console.log($(this).attr('src'));
+    var src1 = $(this).attr('src');
+    var VElement = $(this);
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+
+    xhr.onload = function() {
+
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+
+            var byteCharacters = atob(reader.result.slice(reader.result.indexOf(',') + 1));
+
+            var byteNumbers = new Array(byteCharacters.length);
+
+            for (var i = 0; i < byteCharacters.length; i++) {
+
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+            var blob = new Blob([byteArray], { type: 'video/mp4' });
+            var url = URL.createObjectURL(blob);
+            console.log(url);
+            VElement.attr('src', url);
+        }
+        reader.readAsDataURL(xhr.response);
+    };
+
+    xhr.open('GET', src1);
+    xhr.send();
+});
+</script>
+
+</html>

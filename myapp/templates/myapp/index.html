@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Index</title>
+</head>
+
+<body>
+    <center><br><br><br>
+        <form action="{% url 'getvideo' %} " method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name of Video:</label>
+            <input type="text" name="name"><br>
+            <label for="video_file">Upload Video File:</label>
+            <input type="file" name="video_file"><br><br><br>
+            <input type="submit" value="Convert">
+        </form>
+    </center>
+</body>
+
+</html>
