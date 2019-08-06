@@ -8,6 +8,10 @@
 
 <body>
     <center><br><br><br>
+        <label>Device Name : </label>{{ device_name }}<br>
+        <label>Language : </label>{{ language }}<br>
+        <label>Server Name : </label>{{ server_name }}<br>
+        <label>Port Number : </label>{{ Port }}<br>
         <form action="{% url 'getvideo' %} " method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="name">Name of Video:</label>
@@ -16,6 +20,7 @@
             <input type="file" name="video_file"><br><br><br>
             <input type="submit" value="Convert">
         </form>
+        <a href="{% url 'showmedia' %}">Click</a>
     </center>
 </body>
 

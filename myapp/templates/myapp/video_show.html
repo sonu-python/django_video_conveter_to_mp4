@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en"> 
 {% load static %}
 <title>Show Video</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
+
 <body>
     <h1>Show video</h1>
     {% for i in data %}
-    <video name="video" src="{{ i.mp4file.url }}" width="640" height="480" controls="true">
+    <video id="video"  name="video" src="{{ i.mp4file.url }}" width="430" height="200" controls="true" type="video/mp4; codecs='mp4v.20.8'">
     </video>
-    {% endfor %}
+    {% endfor %} 
 </body>
+
 <script type="text/javascript">
 jQuery("video").each(function() {
     console.log($(this).attr('src'));
@@ -41,7 +42,7 @@ jQuery("video").each(function() {
             var blob = new Blob([byteArray], { type: 'video/mp4' });
             var url = URL.createObjectURL(blob);
             console.log(url);
-            VElement.attr('src', url);
+            VElement.attr('src', url/*+"#t=5"*/);
         }
         reader.readAsDataURL(xhr.response);
     };
@@ -50,5 +51,4 @@ jQuery("video").each(function() {
     xhr.send();
 });
 </script>
-
 </html>

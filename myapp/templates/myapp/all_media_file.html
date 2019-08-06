@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>All Media File</title>
+</head>
+
+<body>
+    <center><br><br><br>
+        <form action="{% url 'allmedia' %} " method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" name="name"><br><br>
+            <label for="mediafile">Choose Any File:</label>
+            <input type="file" name="mediafile" multiple="multiple"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </center>
+</body>
+
+</html>

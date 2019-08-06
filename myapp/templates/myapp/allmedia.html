@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Show All Media</title>
+</head>
+
+<body>
+    <center>
+        <table border="0.5" >
+            <tr bgcolor="#667292">
+                <th>Name</th>
+                <th>File</th>
+            </tr>
+            {% for i in AllMedia %}
+            <tr>
+                <td bgcolor="#87bdd8">{{ i.name }}</td>
+                <td bgcolor="#f2e394">
+                    {% if i.file_types == "I" %}
+                    <img src="{{ i.media_file.url }}" width="250" height="250"/>
+                    {% elif i.file_types == "V" %}
+                    <video src="{{ i.media_file.url }}" controls width="250" height="250">
+                    </video>
+                    {% else %}
+                    <audio src="{{ i.media_file.url}}" controls></audio>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </center>
+</body>
+
+</html>

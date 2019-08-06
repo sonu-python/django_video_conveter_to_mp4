@@ -5,8 +5,20 @@ from django.conf import settings
 
 # Create your views here.
 def index(request):
-	print(settings.BASE_DIR)
-	return render(request, "myapp/index.html")
+	device_name = request.environ['GNOME_SHELL_SESSION_MODE']
+	language = request.environ['LANGUAGE']
+	server_name = request.environ['SERVER_NAME']
+	Port = request.environ['SERVER_PORT']
+	var = request.headers['User-Agent']
+	var1 = var.split()
+	if "Chrome" in var:
+		print(var1[-2])
+	else:
+		print(var1[-1])
+	return render(request, "myapp/index.html", {'device_name' : device_name,
+		'language' : language, 
+		'server_name' : server_name, 
+		'Port' : Port})
 
 
 def getvideo(request):
@@ -25,7 +37,32 @@ def getvideo(request):
 		return redirect(success)
 	else:
 		return redirect(index)
-	
+
+
+def showmedia(request):
+	return render(request, 'myapp/all_media_file.html')
+
+
+def allmedia(request):
+	if request.method == "POST":
+		name = request.POST.get("name")
+		media = request.FILES.getlist("mediafile")
+		for i in media:
+			if i.name.lower().endswith(('.png', '.jpg', '.jpeg')):
+				obj = AllMedia(name=name, media_file=i, file_types='I')
+			elif i.name.lower().endswith(('.mp4', '.avi')):
+				obj = AllMedia(name=name, media_file=i, file_types='V')
+			elif i.name.lower().endswith(('.mp3')):
+				obj = AllMedia(name=name, media_file=i, file_types='A')
+			obj.save()
+	return redirect(allmedia_success)
+
+
+def allmedia_success(request):
+	if request.method == "GET":
+		obj = AllMedia.objects.all()
+		return render(request, "myapp/allmedia.html", {"AllMedia": obj})
+
 
 def success(request):
 	if request.method == "GET":
